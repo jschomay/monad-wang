@@ -129,7 +129,10 @@ module.exports = function(grunt) {
 			},
 			html: {
 				files: [ 'index.html']
-			}
+			},
+      markdown: {
+        files: ['README.md']
+      }
 		}
 
 	});
