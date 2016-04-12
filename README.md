@@ -1,214 +1,147 @@
-A light introduction to
-Functional Programming
+That's Monad-wang!
 ==============================
 
-`k => {k: v} => {k: v} => Boolean`
 
+## Goals
 
+1. Give the slightest hint of what a monad looks like and what it does
+2. Use a silly example to demonstrate a monad
+3. Blow your mind / make your brain hurt / confuse you / delight and amuse you
 
-What is FP?
------------
 
-- A focus on functions as the basic building block <!-- .element: class="fragment" -->
-- Functions that take other functions as arguments <!-- .element: class="fragment" -->
-- Functions that return other functions <!-- .element: class="fragment" -->
-- Pure <!-- .element: class="fragment" -->
-  - Same inputs give the same outputs (don't rely on outside state) <!-- .element: class="fragment" -->
-  - No side-effects! (mutating state, calling other api's) <!-- .element: class="fragment" -->
+## Non-goals
 
+1. Satisfactorily explain monads
+2. Demonstrate understanding of monads
+3. Demonstrate understanding of anything
 
 
-Why FP?
---------
 
-- Robust - predictable, flexible, and less buggy <!-- .element: class="fragment" -->
-- Easy to read and reason about - "What" not "how" <!-- .element: class="fragment" -->
-- Separate behavior from data <!-- .element: class="fragment" -->
-- Build complexity through composition of simple, reusable units <!-- .element: class="fragment" -->
+## Monads
 
+Monads are a design pattern to add "power-ups" to a value
 
-
-Under the hood
---------------------
-
-
-### Common examples
-
-- `map`
-- `bind` (aka `partial`)
-
-
-### `Map`
-
-```
-function map (fn, list) {
-  let results = [];
-  for (let i = 0; i < list.length; i++) {
-    results.push(fn(list[i], i));
-  }
-  return results;
-}
-```
-
-
-### Benefits
-- Lets us focus on concepts ("map", "filter", "reduce") rather than implementation
-
-```
-let cardinalDegs = [0, 90, 180, 360];
-let cardinalRads = map(MathLib.degToRad, cardinalDegs);
-```
-
-
-### `Partial`
-
-```
-function partial (fn, ...boundArgs) {
-  return (...calledArgs) => {
-    return fn.apply(null, [...boundArgs, ...calledArgs]);
-  };
-}
-```
-
-
-### Benefits
-- Lets us build up reusable behavior
-- Separates defining behavior from applying our data
-
-```
-let getProp = (prop, obj) => obj[prop];
-let getAge = partial(getProp, 'age');
-let getAges = partial(map, getAge);
-
-let people = [
-  {name: "Joe", age: 31},
-  {name: "Jack", age: 32},
-  {name: "Jim", age: 29}
-];
-let ages = getAges(people);
-```
-
-
-
-FP in practice
---------------
-(with good ol' javascript) <!-- .element: class="fragment" -->
-
-
-### [Ramda.js](http://ramdajs.com/0.18.0/index.html)
-
-![ramda](http://ramda.jcphillipps.com/logo/ramdaFilled_200x235.png)
-
-- Practical and performant
-- Supports and encourages composition
-  - Data last!
-  - Auto-curried
-  - [Hey Underscore, You're Doing It Wrong!](https://www.youtube.com/watch?v=m3svKOdZijA) <!-- .element: class="fragment" -->
-
-
-Composition
------------
-
-- Passing the output of one function as the argument for another
-- Like unix's `pipe`
-
-```
-let fgh = (x) => {
-  f(g(h(x)));
-};
-fgx(x);
-```
-<!-- .element: class="fragment" -->
-
-
-### With ramda
-
-```
-let fgh = R.compose(f,g,h);
-fgh(x);
-```
-
-(pro tip - read from right to left, bottom to top)
-
-Bonus points for being "points-free"
-<!-- .element: class="fragment" -->
-- Function definitions do not identify the arguments (or "points") on which they operate
-- In other words, you don't see the `(...) => {...}` syntax (less clutter)
-
-<!-- .element: class="fragment" -->
-
-
-Currying
---------
-
-- The ability to call a function one argument at a time
-- Like partial application, but repeatable
-
-```
-let add3Things = (a, b, c) =>  a + b + c ;
-let six = add3Things(1, 2, 3);
-
-let curriedAdd3Things = R.curry(add3Things);
-
-let six = curriedAdd3Things(1)(2)(3);
-// or
-let onePlusTwoMoreThings = curriedAdd3Things(1);
-let threePlusOneMoreThing = onePlusTwoMoreThings(2);
-let six = threePlusOneMoreThing(3);
-```
-
-
-
-A practical example
--------------------
-
-```
-let people = [
-  {name: "Joe", age: 31},
-  {name: "Jack", age: 32},
-  {name: "Jim", age: 29}
-];
-
-let getAges = R.map(R.prop('age')):
-let ages = getAges(people); // [31, 32, 29]
-```
-
-
-What is the oldest age?
-```
-let getOldest = R.compose(R.max, getAges);
-let oldest = getOldest(people); // 32
-```
-
-
-Who is under 30?
-```
-let isUnder30 = R.compose(R.gt(30), R.prop('age'));
-let peopleUnder30 = R.compose(
-  R.map(R.prop('name')),
-  R.filter(isUnder30)
-)(people); // ['Jim']
-```
-
-
-
-FP notation
------------
-
-So what does this mean:
-
-`k => {k: v} => {k: v} => Boolean`
-
-A function that takes a key, then one object, then another object, and returns a boolean.
-<!-- .element: class="fragment" -->
-
-Aka `R.eqProps` - Do two objects have the same value for a given key?
-
+Example: The "numberwang monad" - just a number, but with the "power-up" that it might also be numberwang
 <!-- .element: class="fragment" -->
 
 
 
-Now go play!
------------
-http://ramdajs.com/repl/
-<iframe src="http://ramdajs.com/repl/" width="100%" height="500">
+## WTF is Numberwang?
+
+Numberwang is a British game show parody that follows concealed rules (wink, wink, like a monad):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qjOZtWZ56lc" frameborder="0" allowfullscreen></iframe>
+
+
+
+## Why Monads?
+
+Two things helped me understand what monads are about:
+
+1. We really want to compose functions together <!-- .element: class="fragment" -->
+2. Sometimes we can't compose functions together (because of type mismatches) :( <!-- .element: class="fragment" -->
+
+Monads let us force square pegs in round holes so we can compose again :) <!-- .element: class="fragment" -->
+
+In more specific terms, monads let us preserve a "context" through code that doesn't handle said context. <!-- .element: class="fragment" -->
+
+
+
+## For the visual learners
+
+[composition diagrams]
+<!-- .element: class="fragment" -->
+
+
+
+## Example in code (sort of)
+
+```haskell
+-- Step 1: define our numberwang type
+type Numberwang = Just Int | Numberwang Int
+
+toNumberwang : Int -> Numberwang
+toNumberwang i =
+  case i of
+    4 -> Numberwang i
+    -- if it's Tuesday or a leap year, and it's raining, and
+    -- the number of letters in your name is a factorial of
+    -- your guess, etc etc etc... -> Numberang i
+    _ -> Just i
+
+-- > toNumberwang 2
+-- Just 2 : Numberwang
+
+-- > toNumberwang 4
+-- Numberwang 4 : Numberwang
+```
+
+
+```haskell
+-- Step 2: a function that knows nothing about numberwangs
+inc : Int -> Int
+inc i =
+  i + 1
+
+-- > inc 2
+-- 3 : Int
+
+-- > inc (toNumberwang 2)
+-- Error: Function `inc` is expecting: Int, But received: Numberwang
+```
+
+
+```haskell
+-- Step 3: jamming a numberwang into our non-numberwang function
+magicSauce : Numberwang -> (Int -> Numberwang) -> Numberwang
+magicSauce n f =
+  case n of
+    Just i -> f i
+    Numberwang i -> f i
+
+incNumberwang : Numberwang -> Numberwang
+incNumberwang n =
+  magicSauce n (\i -> toNumberwang (inc i))
+
+-- > incNumberwang (toNumberwang 2)
+-- Just 3 : Numberwang
+
+-- > incNumberwang (toNumberwang 4)
+-- Just 5 : Numberwang
+
+bruteForceNumberwang : Numberwang -> String
+bruteForceNumberwang n =
+  case n of
+    Numberwang i -> (toString i) ++ " -- That's numberwang!"
+    _ -> bruteForceNumberwang (incNumberwang n)
+
+-- > bruteForceNumberwang (toNumberwang 0)
+-- "4 -- That's numberwang!" : String
+```
+
+
+
+## Again, why mondads?
+
+Monads wrap uncertain data. Wrapped data is considered tainted, but our code can still safely work with it thanks to monads.
+
+
+
+
+## Actually useful monads
+
+- "Maybe" - maybe you get a value,  maybe you get nothing, deal with it <!-- .element: class="fragment" -->
+- "Writer" - you get a value, but I also smuggled some other info along <!-- .element: class="fragment" -->
+- "List" - pick a value, any value... <!-- .element: class="fragment" -->
+- "IO" - don't worry, I'll get my hands dirty, you stay pure <!-- .element: class="fragment" -->
+
+
+
+## That's monad-wang!
+
+Some resources I found most helpful:
+<!-- .element: class="fragment" -->
+http://blog.leahhanson.us/post/monad-tutorial.html
+http://blog.sigfpe.com/2007/04/trivial-monad.html
+http://learnyouahaskell.com/a-fistful-of-monads
+<a href="https://en.wikipedia.org/wiki/Monad_(functional_programming)">https://en.wikipedia.org/wiki/Monad_(functional_programming)<a>
