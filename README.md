@@ -127,7 +127,7 @@ bruteForceNumberwang n =
 
 
 
-## Again, why mondads?
+## Again, why monads?
 
 Monads wrap uncertain data.
 
