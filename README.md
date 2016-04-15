@@ -49,8 +49,14 @@ In more specific terms, monads let us preserve a "context" through code that doe
 
 ## For the visual learners
 
-[composition diagrams]
-<!-- .element: class="fragment" -->
+
+<img data-src="images/compose.png">
+
+
+<img data-src="images/map.png">
+
+
+<img data-src="images/monad.png">
 
 
 
@@ -123,8 +129,10 @@ bruteForceNumberwang n =
 
 ## Again, why mondads?
 
-Monads wrap uncertain data. Wrapped data is considered tainted, but our code can still safely work with it thanks to monads.
+Monads wrap uncertain data.
 
+Wrapped data is considered tainted, but our code can still safely work with it thanks to monads,
+and the actual interactions with the uncertain aspects are quarantined to an single place in our code.
 
 
 
@@ -140,8 +148,11 @@ Monads wrap uncertain data. Wrapped data is considered tainted, but our code can
 ## That's monad-wang!
 
 Some resources I found most helpful:
-<!-- .element: class="fragment" -->
+
 http://blog.leahhanson.us/post/monad-tutorial.html
 http://blog.sigfpe.com/2007/04/trivial-monad.html
+https://www.quora.com/Why-dont-monads-violate-the-purely-functional-nature-of-languages
 http://learnyouahaskell.com/a-fistful-of-monads
-<a href="https://en.wikipedia.org/wiki/Monad_(functional_programming)">https://en.wikipedia.org/wiki/Monad_(functional_programming)<a>
+<a href="https://en.wikipedia.org/wiki/Monad_(functional_programming)">https://en.wikipedia.org/wiki/Monad_(functional_programming)</a>
+
+This presentation - http://jschomay.github.io/monad-wang
