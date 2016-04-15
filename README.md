@@ -39,7 +39,7 @@ Numberwang is a British game show parody that follows concealed rules (wink, win
 Two things helped me understand what monads are about:
 
 1. We really want to compose functions together <!-- .element: class="fragment" -->
-2. Sometimes we can't compose functions together (because of type mismatches) :( <!-- .element: class="fragment" -->
+2. Sometimes we can't compose functions together :( (because of type mismatches or uncertain values) <!-- .element: class="fragment" -->
 
 Monads let us force square pegs in round holes so we can compose again :) <!-- .element: class="fragment" -->
 
