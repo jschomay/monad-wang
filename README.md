@@ -1,17 +1,26 @@
 That's Monad-wang!
 ==============================
 
+Notes:
+- People who know me know I'm obsessed with functional languages
+- Lately I've been fascinated with monads
+  - Pinnacle of obscure functional programming concepts
+  - Really are fascinating in what they can do for your program
+
 
 ## Goals
 
-1. Give the slightest hint of what a monad looks like and what it does
+1. Give a taste of what monads look like and what they do
 2. Use a silly example to demonstrate a monad
 3. Blow your mind / make your brain hurt / confuse you / delight and amuse you
+
+Notes:
+- The traditional  monadic rite of passage is to present your own monad tutorial, so here I am adding to the universal canon of monad explanations
 
 
 ## Non-goals
 
-1. Satisfactorily explain monads
+1. Satisfactorily / accurately / completely explain monads
 2. Demonstrate understanding of monads
 3. Demonstrate understanding of anything
 
@@ -45,18 +54,28 @@ Monads let us force square pegs in round holes so we can compose again :) <!-- .
 
 In more specific terms, monads let us preserve a "context" through code that doesn't handle said context. <!-- .element: class="fragment" -->
 
+Notes:
+- Programs are really just lots of values passed through lots of functions.  If the wrong value goes into the wrong function, your program blows up.  Monads let your program chug happily along without it even caring what specific values go through it.
+
 
 
 ## For the visual learners
 
 
 <img data-src="images/compose.png">
+Notes:
+You can compose like functions together all day long
 
 
 <img data-src="images/map.png">
+Notes:
+If your functions don't match, you can use transforms to make them match
 
 
 <img data-src="images/monad.png">
+Notes:
+But in some cases you can't transform (how do you turn null or an error into a number?), or you don't want to lose context in a transform.
+A monad "wraps" functions to let you chain them together
 
 
 
@@ -133,6 +152,10 @@ Monads wrap uncertain data.
 
 Wrapped data is considered tainted, but our code can still safely work with it thanks to monads,
 and the actual interactions with the uncertain aspects are quarantined to an single place in our code.
+
+Notes:
+- This example is contrived and over simplified, but in the real world monads are more useful, and syntactic sugar makes monad composition simple and expressive.
+- By using monads in a pure functional language, you can actually mathematically prove that your program will work, no matter what data goes through it. 
 
 
 
